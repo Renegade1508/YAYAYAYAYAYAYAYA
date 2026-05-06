@@ -1,0 +1,339 @@
+/* ───────────────────────────────────────────────────
+   CSS VARIABLES & RESET
+─────────────────────────────────────────────────── */
+:root {
+  --black:    #060010;
+  --deep:     #0a001f;
+  --pink:     #ff4d88;
+  --rose:     #ff1f6a;
+  --blush:    #ffb3cc;
+  --glow:     #ff80ab;
+  --violet:   #7b1fa2;
+  --star:     #ffe4f0;
+  --text:     #fff0f5;
+  --font-script: 'Pinyon Script', cursive;
+  --font-serif:  'Cormorant Garamond', serif;
+  --font-sans:   'Montserrat', sans-serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  width:100%; height:100%;
+  overflow:hidden;
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--font-serif);
+}
+
+/* ───────────────────────────────────────────────────
+   SHARED STARFIELD CANVAS
+─────────────────────────────────────────────────── */
+#starCanvas {
+  position:fixed;
+  inset:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ───────────────────────────────────────────────────
+   SLIDES
+─────────────────────────────────────────────────── */
+.slide {
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 1.2s ease;
+  z-index:1;
+}
+.slide.active {
+  opacity:1;
+  pointer-events:all;
+}
+.slide.exit {
+  opacity:0;
+  pointer-events:none;
+}
+
+.slide-inner {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:clamp(16px, 3vh, 32px);
+  text-align:center;
+  padding: 24px;
+  position:relative;
+  z-index:2;
+}
+
+/* ───────────────────────────────────────────────────
+   SLIDE 1 — LANDING
+─────────────────────────────────────────────────── */
+#slide1 {
+  background: radial-gradient(ellipse at 50% 60%, #1a0030 0%, #060010 70%);
+}
+
+.heart-glow {
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: var(--pink);
+  display:block;
+  filter: drop-shadow(0 0 18px var(--pink)) drop-shadow(0 0 40px var(--rose));
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+.script-title {
+  font-family: var(--font-script);
+  font-size: clamp(3.5rem, 12vw, 8rem);
+  color: var(--blush);
+  text-shadow:
+    0 0 20px var(--pink),
+    0 0 60px var(--rose),
+    0 0 100px #ff0055;
+  line-height: 1;
+  animation: fadeSlideUp 1.2s ease both;
+}
+
+.subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  font-weight:300;
+  letter-spacing: 0.2em;
+  color: var(--blush);
+  opacity:0.75;
+  animation: fadeSlideUp 1.4s ease both;
+}
+
+.hint {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing:0.15em;
+  opacity:0.4;
+  color: var(--blush);
+  animation: fadeSlideUp 2s ease both;
+}
+
+/* ── CTA BUTTON ── */
+.cta-btn {
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight:400;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, var(--rose) 0%, var(--violet) 100%);
+  border:none;
+  border-radius:50px;
+  padding: 14px 44px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  box-shadow:
+    0 0 20px var(--rose),
+    0 0 60px rgba(255,30,100,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeSlideUp 1.8s ease both;
+}
+.cta-btn.small { font-size:0.8rem; padding:10px 32px; }
+.cta-btn::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  border-radius:50px;
+}
+.cta-btn:hover {
+  transform:scale(1.07);
+  box-shadow:
+    0 0 30px var(--rose),
+    0 0 80px rgba(255,30,100,0.5);
+}
+.cta-btn:active { transform:scale(0.97); }
+
+/* ── FLOATING PETALS ── */
+.petals { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.petal {
+  position:absolute;
+  font-size:1rem;
+  opacity:0;
+  animation: floatPetal linear infinite;
+  color: var(--pink);
+  filter: drop-shadow(0 0 4px var(--pink));
+}
+
+/* ───────────────────────────────────────────────────
+   SLIDE 2 — HEART OF PHOTOS
+─────────────────────────────────────────────────── */
+#slide2 {
+  background: radial-gradient(ellipse at 50% 50%, #12001a 0%, #060010 80%);
+}
+
+.slide-label {
+  font-family: var(--font-script);
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  color: var(--blush);
+  opacity:0.85;
+  text-shadow: 0 0 20px var(--pink);
+  animation: fadeSlideUp 1s ease both;
+}
+
+/* The 3-D heart container */
+.heart-scene {
+  width: clamp(260px, 60vmin, 460px);
+  height: clamp(260px, 60vmin, 460px);
+  position:relative;
+  perspective: 900px;
+}
+
+.heart-ring {
+  width:100%;
+  height:100%;
+  position:absolute;
+  transform-style: preserve-3d;
+  animation: spinHeart 14s linear infinite;
+}
+
+.photo-frame {
+  position:absolute;
+  width: clamp(56px, 12vmin, 86px);
+  height: clamp(56px, 12vmin, 86px);
+  border-radius:50%;
+  overflow:hidden;
+  border: 2px solid var(--pink);
+  box-shadow:
+    0 0 10px var(--pink),
+    0 0 24px rgba(255,77,136,0.4);
+  background: var(--deep);
+  transform-origin:center center;
+}
+
+.photo-frame img {
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* placeholder gradient when no real photo */
+.photo-frame.placeholder {
+  background: linear-gradient(135deg, var(--violet), var(--rose));
+  display:flex; align-items:center; justify-content:center;
+  font-size: 1.6rem;
+}
+
+/* ───────────────────────────────────────────────────
+   SLIDE 3 — TYPEWRITER + STAR NAME
+─────────────────────────────────────────────────── */
+#slide3 {
+  background: radial-gradient(ellipse at 50% 30%, #0d0020 0%, #060010 75%);
+}
+
+#nameCanvas {
+  position:absolute;
+  inset:0;
+  width:100%; height:100%;
+  pointer-events:none;
+}
+
+.typewriter-box {
+  position:relative;
+  z-index:3;
+  max-width: min(700px, 90vw);
+  padding: 32px 40px;
+  background: rgba(6,0,16,0.55);
+  border: 1px solid rgba(255,77,136,0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 60px rgba(255,30,100,0.12);
+  margin-top: clamp(160px, 30vh, 220px);
+}
+
+.typewriter-text {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-style:italic;
+  font-weight:300;
+  line-height:1.9;
+  color: var(--text);
+  letter-spacing:0.03em;
+  white-space: pre-wrap;
+}
+
+.cursor {
+  display:inline-block;
+  color: var(--pink);
+  font-size: 1.4em;
+  line-height:1;
+  vertical-align:middle;
+  animation: blink 0.8s step-start infinite;
+}
+
+/* final note */
+.final-note {
+  position:relative; z-index:3;
+  text-align:center;
+  animation: fadeSlideUp 1.4s ease both;
+}
+.final-note.hidden { display:none; }
+
+.final-big {
+  font-family: var(--font-script);
+  font-size: clamp(2.8rem, 9vw, 6rem);
+  color: var(--blush);
+  text-shadow: 0 0 30px var(--pink), 0 0 80px var(--rose);
+  line-height:1.1;
+}
+.final-sub {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-style:italic;
+  opacity:0.8;
+  margin-top:12px;
+}
+.final-tiny {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing:0.2em;
+  opacity:0.4;
+  margin-top:16px;
+}
+
+/* ───────────────────────────────────────────────────
+   KEYFRAMES
+─────────────────────────────────────────────────── */
+@keyframes heartbeat {
+  0%,100% { transform:scale(1); }
+  14%     { transform:scale(1.2); }
+  28%     { transform:scale(1); }
+  42%     { transform:scale(1.15); }
+  70%     { transform:scale(1); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+@keyframes blink {
+  0%,49% { opacity:1; }
+  50%,100%{ opacity:0; }
+}
+
+@keyframes floatPetal {
+  0%   { transform:translateY(110vh) rotate(0deg); opacity:0.8; }
+  100% { transform:translateY(-20vh) rotate(540deg); opacity:0; }
+}
+
+@keyframes spinHeart {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+
+@keyframes starPop {
+  0%   { transform:scale(0) rotate(0deg); opacity:0; }
+  60%  { opacity:1; }
+  100% { transform:scale(1) rotate(720deg); opacity:1; }
+}

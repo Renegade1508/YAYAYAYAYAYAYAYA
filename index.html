@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>For Jigyasa 🍒</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Dancing+Script:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- AUDIO replace song.mp3 with your file -->
+  <audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg"/>
+  </audio>
+
+  <!-- shared starfield canvas -->
+  <canvas id="starCanvas"></canvas>
+  <!-- film-grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+  <!-- music toggle -->
+  <button class="mute-btn" id="muteBtn" aria-label="Toggle music">🎵</button>
+
+  <!-- ── SLIDE 1 ─ Landing ───────────────────────── -->
+  <section class="slide active" id="slide1">
+    <div class="slide-wrap center">
+      <div class="cherry-deco top-deco" aria-hidden="true">🍒</div>
+      <div class="land-heart" aria-hidden="true">♥</div>
+      <h1 class="land-title">Hey Jigyasa</h1>
+      <p class="land-sub">Something ridiculously special is waiting for you…</p>
+      <div class="quirk-row">
+        <span class="q-pill" style="--d:0s">100% certified in love</span>
+        <span class="q-pill" style="--d:.15s">no refunds 💀</span>
+      </div>
+      <button class="cta-btn" id="startBtn">Open My Heart &nbsp;♥</button>
+      <p class="hint-text">🎵 turn on sound · tap to begin</p>
+      <div class="cherry-deco bot-deco" aria-hidden="true">🍒</div>
+    </div>
+    <div id="petals" aria-hidden="true"></div>
+  </section>
+
+  <!-- ── SLIDE 2 ─ Love Counter ─────────────────── -->
+  <section class="slide" id="slide2">
+    <div class="slide-wrap center">
+      <p class="eyebrow">a totally scientific measurement</p>
+      <h2 class="sec-title">How Much Vayun<br>Loves Jigyasa</h2>
+      <div class="counter-outer">
+        <div class="counter-glow" aria-hidden="true"></div>
+        <div class="counter-num" id="counterDisplay">0</div>
+        <p class="counter-unit">×&nbsp;∞</p>
+      </div>
+      <p class="counter-label" id="counterLabel">calculating love units…</p>
+      <div class="emoji-burst" id="emojiBurst" aria-hidden="true"></div>
+      <button class="cta-btn sm" id="counterNext">Next &nbsp;♥</button>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 3 ─ Photo Heart ──────────────────── -->
+  <section class="slide" id="slide3">
+    <div class="slide-wrap center">
+      <p class="eyebrow">exhibit A</p>
+      <h2 class="sec-title">Every Version of You<br>Lives Rent-Free in My Head</h2>
+      <div class="heart-stage" id="heartScene"></div>
+      <p class="heart-caption">🍒 assembled with embarrassing amounts of love</p>
+      <button class="cta-btn sm" id="toSlide4Btn">keep going &nbsp;♥</button>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 4 ─ Star Name ────────────────────── -->
+  <section class="slide" id="slide4">
+    <div class="slide-wrap center">
+      <p class="eyebrow">written in the sky, just for you</p>
+      <div class="name-canvas-wrap">
+        <canvas id="nameCanvas"></canvas>
+      </div>
+      <p class="name-sub" id="nameTagline"></p>
+      <p class="name-hint">← your name, written in stars, obviously</p>
+      <button class="cta-btn sm" id="toSlide5Btn">I have more to say &nbsp;♥</button>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 5 ─ Typewriter Letter ───────────── -->
+  <section class="slide" id="slide5">
+    <div class="slide-wrap scrollable">
+      <p class="eyebrow">from vayun, with embarrassing amounts of love</p>
+      <div class="letter-card">
+        <div class="letter-seal">🍒</div>
+        <div class="letter-body">
+          <p class="tw-text" id="typewriterText"></p><span class="tw-cursor" id="twCursor">|</span>
+        </div>
+      </div>
+      <div class="final-note hidden" id="finalNote">
+        <p class="final-big">I love you,<br>Jigyasa ♥</p>
+        <p class="final-sub">Forever yours, <em>Vayun</em> 🌙</p>
+        <p class="final-tiny">thank you for existing ✨</p>
+        <div class="heart-rain" id="heartRain" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 6 ─ Quirky Reasons ──────────────── -->
+  <section class="slide" id="slide6">
+    <div class="slide-wrap scrollable">
+      <p class="eyebrow">a formal peer-reviewed report</p>
+      <h2 class="sec-title">Top Reasons<br>I'm Completely Down Bad</h2>
+      <ol class="reasons-list" id="reasonsList"></ol>
+      <button class="cta-btn sm" id="toSlide7Btn">one last thing &nbsp;♥</button>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 7 ─ Final Promise ────────────────── -->
+  <section class="slide" id="slide7">
+    <div class="slide-wrap center">
+      <div class="promise-cherry" aria-hidden="true">🍒</div>
+      <h2 class="promise-title">My Promise<br><em>to You</em></h2>
+      <ul class="promise-list" id="promiseList"></ul>
+      <div class="final-stamp">
+        <p>sealed with love &amp; a cherry on top</p>
+        <p class="stamp-sig">— Vayun &nbsp;♥</p>
+      </div>
+      <button class="cta-btn sm" id="replayBtn">💌 replay from the start</button>
+    </div>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>
